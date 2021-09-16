@@ -39,4 +39,17 @@ public class HotelManagementTest {
 		System.out.println(hotel);
 		System.out.println();
 	}
+	
+	@Test
+	public void givenDateRange_find_BestRatedHotel() {
+		HotelManagementMain hotelManagement = new HotelManagementMain();
+		hotelManagement.addHotel("Lakewood",110.0,90.0,3);
+		hotelManagement.addHotel("Bridgewood",150.0,50.0,4);
+		hotelManagement.addHotel("Ridgewood",220.0,150.0,5);
+		
+		Hotel hotel = hotelManagement.getBestRatedHotel("11-9-2020","12-9-2020");
+		System.out.println("the best rated hotel is : ");
+		System.out.println(hotel);
+		System.out.println();
+	}
 }
