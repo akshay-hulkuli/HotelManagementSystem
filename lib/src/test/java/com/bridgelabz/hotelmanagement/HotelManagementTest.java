@@ -2,13 +2,26 @@ package com.bridgelabz.hotelmanagement;
 
 import org.junit.Assert;
 import org.junit.Test;
-
+import java.time.LocalDate;
 
 public class HotelManagementTest {
 	@Test
-	public void givenFirstName_WhenProper_ShouldReturnTrue() {
-		HotelManagementMain hotelmanagement = new HotelManagementMain();
-		boolean result = hotelmanagement.addHotel("Lakewood",100.0,110.0);
-		Assert.assertTrue(result);
+	public void givenHotelData_ifCorrect_ShouldGetTrue() {
+		HotelManagementMain hotelManagement = new HotelManagementMain();
+		int oldSize = hotelManagement.hotelList.size();
+		hotelManagement.addHotel("Lakewood",100.0,4);
+		Assert.assertSame(oldSize+1,hotelManagement.hotelList.size());
+	}
+	
+	@Test
+	public void givenDate_find_CheapestHotel() {
+		HotelManagementMain hotelManagement = new HotelManagementMain();
+		hotelManagement.addHotel("Lakewood",100.0,4);
+		hotelManagement.addHotel("Bridgewood",110.0,4);
+		hotelManagement.addHotel("Ridgewood",105.0,4);
+		LocalDate date1 = LocalDate.of(2021, 9, 10);
+		LocalDate date2 = LocalDate.of(2021, 9, 11);
+		Hotel hotel = hotelManagement.getCheapestHotel(date1, date2);
+		System.out.println(hotel);
 	}
 }
