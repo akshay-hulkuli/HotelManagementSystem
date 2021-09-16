@@ -1,7 +1,6 @@
 package com.bridgelabz.hotelmanagement;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,7 +14,6 @@ public class HotelManagementMain {
 	public void  addHotel(String name, double weekdayPrice, double weekendPrice, int rating) {
 		Hotel hotel = new Hotel(name, weekdayPrice, weekendPrice, rating);
 		hotelList.add(hotel);
-		System.out.println(hotel);
 	}
 	
 	public List<Hotel> getCheapestHotel(String date1, String date2) {
@@ -46,7 +44,13 @@ public class HotelManagementMain {
 									 .filter(isMinimum)
 									 .collect(Collectors.toList());
 		return cheapestHotels;
-
 	}
 
+	public Hotel getCheapestAndBestRatedHotel(String date1, String date2) {
+		List<Hotel> cheapestHotels = getCheapestHotel(date1,date2);
+		
+		return cheapestHotels.stream()
+			   .max((h1,h2) -> h1.getRating()-h2.getRating())
+			   .orElse(null);
+	}
 }
