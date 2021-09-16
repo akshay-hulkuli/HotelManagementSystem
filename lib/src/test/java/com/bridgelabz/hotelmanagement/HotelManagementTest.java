@@ -22,8 +22,8 @@ public class HotelManagementTest {
 		hotelManagement.addHotel("Bridgewood",150.0,50.0,4);
 		hotelManagement.addHotel("Ridgewood",220.0,150.0,5);
 		
-		Hotel hotel = hotelManagement.getCheapestHotel("10-9-2021","20-10-2021");
-		System.out.println("the cheapest hotel is : ");
-		System.out.println(hotel);
+		List<Hotel> hotels = hotelManagement.getCheapestHotel("11-9-2020","12-9-2020");
+		System.out.println("the cheapest hotel is/are : ");
+		System.out.println(hotels);
 	}
 }
