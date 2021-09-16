@@ -108,4 +108,21 @@ public class HotelManagementTest {
 			System.out.println();
 		}
 	}
+	
+	@Test
+	public void givenDateRangeAndCustomerType_IfEmpty_ShouldThrowException() {
+		HotelManagementMain hotelManagement = new HotelManagementMain();
+		hotelManagement.addHotel("Lakewood",110,90,3,80,80);
+		hotelManagement.addHotel("Bridgewood",150,50,4,110,50);
+		hotelManagement.addHotel("Ridgewood",220,150,5,100,40);
+		ExpectedException exceptionRule = ExpectedException.none();
+		exceptionRule.expect(HotelManagementException.class);
+		try {
+			Hotel hotel = hotelManagement.getCheapestAndBestRatedHotel("","12Sep2020",CustomerType.REWARDED);
+		}
+		catch(HotelManagementException e) {
+			System.out.println(e.getMessage());
+			System.out.println();
+		}
+	}
 }
