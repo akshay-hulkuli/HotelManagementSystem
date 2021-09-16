@@ -46,8 +46,8 @@ public class Hotel {
 		this.weekendPrice = weekendPrice;
 	}
 	
-	public Double getPrice(long numOfDays) {
-		return weekdayPrice*numOfDays;
+	public Double getPrice(int numOfWeekdays, int numOfWeekends) {
+		return weekdayPrice*numOfWeekdays + weekendPrice*numOfWeekends;
 	}
 	
 	@Override
