@@ -3,7 +3,6 @@ package com.bridgelabz.hotelmanagement;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class HotelManagementTest {
@@ -16,7 +15,7 @@ public class HotelManagementTest {
 	}
 	
 	@Test
-	public void givenDate_find_CheapestHotel() {
+	public void givenDateRange_find_CheapestHotel() {
 		HotelManagementMain hotelManagement = new HotelManagementMain();
 		hotelManagement.addHotel("Lakewood",110.0,90.0,3);
 		hotelManagement.addHotel("Bridgewood",150.0,50.0,4);
@@ -25,5 +24,19 @@ public class HotelManagementTest {
 		List<Hotel> hotels = hotelManagement.getCheapestHotel("11-9-2020","12-9-2020");
 		System.out.println("the cheapest hotel is/are : ");
 		System.out.println(hotels);
+		System.out.println();
+	}
+	
+	@Test
+	public void givenDateRange_find_CheapestAndBestRatedHotel() {
+		HotelManagementMain hotelManagement = new HotelManagementMain();
+		hotelManagement.addHotel("Lakewood",110.0,90.0,3);
+		hotelManagement.addHotel("Bridgewood",150.0,50.0,4);
+		hotelManagement.addHotel("Ridgewood",220.0,150.0,5);
+		
+		Hotel hotel = hotelManagement.getCheapestAndBestRatedHotel("11-9-2020","12-9-2020");
+		System.out.println("the cheapest and best rated hotel is : ");
+		System.out.println(hotel);
+		System.out.println();
 	}
 }
