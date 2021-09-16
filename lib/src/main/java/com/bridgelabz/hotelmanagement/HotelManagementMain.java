@@ -2,8 +2,12 @@ package com.bridgelabz.hotelmanagement;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.function.*;
 public class HotelManagementMain {
 	
@@ -11,28 +15,32 @@ public class HotelManagementMain {
 	int numOfWeekdays =0, numOfWeekends =0;
 	
 	
-	public void  addHotel(String name, double weekdayPrice, double weekendPrice, int rating) {
-		Hotel hotel = new Hotel(name, weekdayPrice, weekendPrice, rating);
+	public void  addHotel(String name, double weekdayPrice, double weekendPrice, int rating, double rewardedWeekdayPrice, double rewardedweekendPrice) {
+		Hotel hotel = new Hotel();
+		hotel.setName(name);
+		hotel.setWeekdayPrice(weekdayPrice);
+		hotel.setWeekendPrice(weekendPrice);
+		hotel.setRating(rating);
+		hotel.setRewardedWeekdayPrice(rewardedWeekdayPrice);
+		hotel.setRewardedWeekendPrice(rewardedweekendPrice);
 		hotelList.add(hotel);
 	}
 	
 	public List<Hotel> getCheapestHotel(String date1, String date2) {
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
-		Calendar startDate = Calendar.getInstance(), endDate = Calendar.getInstance();
-		try {
-			startDate.setTime(sdf.parse(date1));
-			endDate.setTime(sdf.parse(date2));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMMuuuu");
+		LocalDate startDate = null, endDate = null;
+
+		startDate = LocalDate.parse(date1,formatter);
+		endDate =LocalDate.parse(date2,formatter);
 	
-		do {
-			if(startDate.get(Calendar.DAY_OF_WEEK) == 0 || startDate.get(Calendar.DAY_OF_WEEK) == 6) numOfWeekends++;
-			else numOfWeekdays++;
-			startDate.add(Calendar.DATE,1);
-		} while(startDate.compareTo(endDate) <=0);
-		
+		Stream.iterate(startDate, date -> date.plusDays(1))
+			  .limit(endDate.compareTo(startDate)+1)
+			  .forEach(date -> {
+				  if(date.getDayOfWeek().equals(DayOfWeek.SUNDAY) || date.getDayOfWeek().equals(DayOfWeek.SATURDAY)) numOfWeekends++;
+				  else numOfWeekdays++;
+			  });
+	
 		Hotel cheapestHotel = hotelList.stream()
 							.min((h1,h2) -> h1.getPrice(numOfWeekdays,numOfWeekends).compareTo(h2.getPrice(numOfWeekdays,numOfWeekends)))
 							.orElse(null);
@@ -55,20 +63,18 @@ public class HotelManagementMain {
 	}
 	
 	public Hotel getBestRatedHotel(String date1, String date2) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
-		Calendar startDate = Calendar.getInstance(), endDate = Calendar.getInstance();
-		try {
-			startDate.setTime(sdf.parse(date1));
-			endDate.setTime(sdf.parse(date2));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMMuuuu");
+		LocalDate startDate = null, endDate = null;
+
+		startDate = LocalDate.parse(date1,formatter);
+		endDate =LocalDate.parse(date2,formatter);
 	
-		do {
-			if(startDate.get(Calendar.DAY_OF_WEEK) == 0 || startDate.get(Calendar.DAY_OF_WEEK) == 6) numOfWeekends++;
-			else numOfWeekdays++;
-			startDate.add(Calendar.DATE,1);
-		} while(startDate.compareTo(endDate) <=0);
+		Stream.iterate(startDate, date -> date.plusDays(1))
+			  .limit(endDate.compareTo(startDate)+1)
+			  .forEach(date -> {
+				  if(date.getDayOfWeek().equals(DayOfWeek.SUNDAY) || date.getDayOfWeek().equals(DayOfWeek.SATURDAY)) numOfWeekends++;
+				  else numOfWeekdays++;
+			  });
 		
 		Hotel bestRatedHotel = hotelList.stream()
 							   .max((h1,h2) -> h1.getRating()-h2.getRating())
