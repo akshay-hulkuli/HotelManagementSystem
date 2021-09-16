@@ -2,6 +2,7 @@ package com.bridgelabz.hotelmanagement;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.*;
 
@@ -71,5 +72,40 @@ public class HotelManagementTest {
 		System.out.println(hotel);
 		System.out.println();
 		Assert.assertEquals("Ridgewood", hotel.getName());
+	}
+	
+	@Test
+	public void givenDateRange_IfNull_ShouldThrowException() {
+		HotelManagementMain hotelManagement = new HotelManagementMain();
+		hotelManagement.addHotel("Lakewood",110,90,3,80,80);
+		hotelManagement.addHotel("Bridgewood",150,50,4,110,50);
+		hotelManagement.addHotel("Ridgewood",220,150,5,100,40);
+		ExpectedException exceptionRule = ExpectedException.none();
+		exceptionRule.expect(HotelManagementException.class);
+		try {
+			Hotel hotel = hotelManagement.getBestRatedHotel(null,"12Sep2020",CustomerType.REWARDED);
+		}
+		catch(HotelManagementException e) {
+			System.out.println(e.getMessage());
+			System.out.println();
+		}
+		
+	}
+	
+	@Test
+	public void givenDateRange_IfEmpty_ShouldThrowException() {
+		HotelManagementMain hotelManagement = new HotelManagementMain();
+		hotelManagement.addHotel("Lakewood",110,90,3,80,80);
+		hotelManagement.addHotel("Bridgewood",150,50,4,110,50);
+		hotelManagement.addHotel("Ridgewood",220,150,5,100,40);
+		ExpectedException exceptionRule = ExpectedException.none();
+		exceptionRule.expect(HotelManagementException.class);
+		try {
+			Hotel hotel = hotelManagement.getBestRatedHotel("","12Sep2020",CustomerType.REWARDED);
+		}
+		catch(HotelManagementException e) {
+			System.out.println(e.getMessage());
+			System.out.println();
+		}
 	}
 }
