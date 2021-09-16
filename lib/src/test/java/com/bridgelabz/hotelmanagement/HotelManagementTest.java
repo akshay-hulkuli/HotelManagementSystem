@@ -21,7 +21,7 @@ public class HotelManagementTest {
 		hotelManagement.addHotel("Bridgewood",150,50,4,110,50);
 		hotelManagement.addHotel("Ridgewood",220,150,5,100,40);
 		
-		List<Hotel> hotels = hotelManagement.getCheapestHotel("11Sep2020","12Sep2020");
+		List<Hotel> hotels = hotelManagement.getCheapestHotel("11Sep2020","12Sep2020",CustomerType.REGULAR);
 		
 		System.out.println("the cheapest hotel is/are : ");
 		System.out.println(hotels);
@@ -37,7 +37,7 @@ public class HotelManagementTest {
 		hotelManagement.addHotel("Bridgewood",150,50,4,110,50);
 		hotelManagement.addHotel("Ridgewood",220,150,5,100,40);
 		
-		Hotel hotel = hotelManagement.getCheapestAndBestRatedHotel("11Sep2020","12Sep2020");
+		Hotel hotel = hotelManagement.getCheapestAndBestRatedHotel("11Sep2020","12Sep2020",CustomerType.REGULAR);
 		System.out.println("the cheapest and best rated hotel is : ");
 		System.out.println(hotel);
 		System.out.println();
@@ -51,7 +51,21 @@ public class HotelManagementTest {
 		hotelManagement.addHotel("Bridgewood",150,50,4,110,50);
 		hotelManagement.addHotel("Ridgewood",220,150,5,100,40);
 		
-		Hotel hotel = hotelManagement.getBestRatedHotel("11Sep2020","12Sep2020");
+		Hotel hotel = hotelManagement.getBestRatedHotel("11Sep2020","12Sep2020",CustomerType.REGULAR);
+		System.out.println("the best rated hotel is : ");
+		System.out.println(hotel);
+		System.out.println();
+		Assert.assertEquals("Ridgewood", hotel.getName());
+	}
+	
+	@Test
+	public void givenDateRangeAndRewardedUser_find_BestRatedHotel() {
+		HotelManagementMain hotelManagement = new HotelManagementMain();
+		hotelManagement.addHotel("Lakewood",110,90,3,80,80);
+		hotelManagement.addHotel("Bridgewood",150,50,4,110,50);
+		hotelManagement.addHotel("Ridgewood",220,150,5,100,40);
+		
+		Hotel hotel = hotelManagement.getBestRatedHotel("11Sep2020","12Sep2020",CustomerType.REWARDED);
 		System.out.println("the best rated hotel is : ");
 		System.out.println(hotel);
 		System.out.println();
