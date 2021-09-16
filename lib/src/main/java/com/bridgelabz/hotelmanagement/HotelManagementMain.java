@@ -5,17 +5,31 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.function.*;
+import java.util.regex.Pattern;
+
+
 public class HotelManagementMain {
 	
 	List<Hotel> hotelList = new ArrayList<Hotel>();
 	int numOfWeekdays =0, numOfWeekends =0;
 	
+	private static final String DATE_REG_EX = "^[0-3][0-9][A-Z][a-z]{2}(202)[0-9]$";
+	
+	@FunctionalInterface
+	interface Validation{
+		boolean inputCheck(String regEx, String input);
+	}
+	static Validation dataValidator = (String regEx, String input) -> { 
+		boolean check= Pattern.matches(regEx,input);
+		return check;
+	};
 	
 	public void  addHotel(String name, double weekdayPrice, double weekendPrice, int rating, double rewardedWeekdayPrice, double rewardedweekendPrice) throws HotelManagementException {
 		try {
@@ -38,6 +52,10 @@ public class HotelManagementMain {
 		try {
 			if(date1.length() == 0 || date2.length() == 0)
 				throw new HotelManagementException(HotelManagementException.exceptionType.ENTERED_EMPTY, "Empty string is passed invalid");
+			if(!(dataValidator.inputCheck(DATE_REG_EX,date1) && dataValidator.inputCheck(DATE_REG_EX,date2))) {
+				System.out.println("enter correct date");
+				return null;
+			}
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMMuuuu");
 			LocalDate startDate = null, endDate = null;
 	
@@ -45,7 +63,7 @@ public class HotelManagementMain {
 			endDate =LocalDate.parse(date2,formatter);
 		
 			Stream.iterate(startDate, date -> date.plusDays(1))
-				  .limit(endDate.compareTo(startDate)+1)
+				  .limit(ChronoUnit.DAYS.between(startDate, endDate)+1)
 				  .forEach(date -> {
 					  if(date.getDayOfWeek().equals(DayOfWeek.SUNDAY) || date.getDayOfWeek().equals(DayOfWeek.SATURDAY)) numOfWeekends++;
 					  else numOfWeekdays++;
@@ -69,6 +87,10 @@ public class HotelManagementMain {
 	}
 
 	public Hotel getCheapestAndBestRatedHotel(String date1, String date2, CustomerType cType) {
+		if(!(dataValidator.inputCheck(DATE_REG_EX,date1) && dataValidator.inputCheck(DATE_REG_EX,date2))) {
+			System.out.println("enter correct date");
+			return null;
+		}
 		List<Hotel> cheapestHotels = getCheapestHotel(date1,date2,cType);
 		
 		return cheapestHotels.stream()
@@ -80,6 +102,10 @@ public class HotelManagementMain {
 		try {
 			if(date1.length() == 0 || date2.length() == 0)
 				throw new HotelManagementException(HotelManagementException.exceptionType.ENTERED_EMPTY, "Empty string is passed invalid");
+			if(!(dataValidator.inputCheck(DATE_REG_EX,date1) && dataValidator.inputCheck(DATE_REG_EX,date2))) {
+				System.out.println("enter correct date");
+				return null;
+			}
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMMuuuu");
 			LocalDate startDate = null, endDate = null;
 	
@@ -87,7 +113,7 @@ public class HotelManagementMain {
 			endDate =LocalDate.parse(date2,formatter);
 		
 			Stream.iterate(startDate, date -> date.plusDays(1))
-				  .limit(endDate.compareTo(startDate)+1)
+				  .limit(ChronoUnit.DAYS.between(startDate, endDate)+1)
 				  .forEach(date -> {
 					  if(date.getDayOfWeek().equals(DayOfWeek.SUNDAY) || date.getDayOfWeek().equals(DayOfWeek.SATURDAY)) numOfWeekends++;
 					  else numOfWeekdays++;
