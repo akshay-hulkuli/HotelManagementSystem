@@ -1,18 +1,15 @@
 package com.bridgelabz.hotelmanagement;
 
+import java.util.HashMap;
+import java.util.Map;
 
 public class Hotel {
 	private String name;
 	private double weekendPrice;
 	private double weekdayPrice;
 	private int rating;
-	
-	public Hotel(String name, double weekdayPrice, double weekendPrice,  int rating) {
-		this.name = name;
-		this.weekdayPrice = weekdayPrice;
-		this.setWeekendPrice(weekendPrice);
-		this.setRating(rating);
-	}
+	private double rewardedWeekdayPrice;
+	private double rewardedWeekendPrice;
 
 	public String getName() {
 		return name;
@@ -47,12 +44,29 @@ public class Hotel {
 	}
 	
 	public Double getPrice(int numOfWeekdays, int numOfWeekends) {
-		return weekdayPrice*numOfWeekdays + weekendPrice*numOfWeekends;
+		return (weekdayPrice*numOfWeekdays + weekendPrice*numOfWeekends);
 	}
 	
 	@Override
 	public String toString() {
-		return "name: "+this.name+" weekdayPrice: "+this.weekdayPrice+" weekendPrice: "+this.weekendPrice+" rating: "+this.rating; 
+		return "name: "+this.name+" weekdayPrice: "+this.weekdayPrice+" weekendPrice: "+this.weekendPrice+" rating: "+this.rating+" rewardedWeekdayPrice: "
+				+this.rewardedWeekdayPrice+" rewardedWeekEndPrice: "+this.rewardedWeekendPrice; 
+	}
+
+	public double getRewardedWeekdayPrice() {
+		return rewardedWeekdayPrice;
+	}
+
+	public void setRewardedWeekdayPrice(double rewardedWeekdayPrice) {
+		this.rewardedWeekdayPrice = rewardedWeekdayPrice;
+	}
+
+	public double getRewardedWeekendPrice() {
+		return rewardedWeekendPrice;
+	}
+
+	public void setRewardedWeekendPrice(double rewardedWeekendPrice) {
+		this.rewardedWeekendPrice = rewardedWeekendPrice;
 	}
 
 }
