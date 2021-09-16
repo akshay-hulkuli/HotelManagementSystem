@@ -58,6 +58,7 @@ public class HotelManagementTest {
 		Assert.assertEquals("Ridgewood", hotel.getName());
 	}
 	
+	
 	@Test
 	public void givenDateRangeAndRewardedUser_find_BestRatedHotel() {
 		HotelManagementMain hotelManagement = new HotelManagementMain();
