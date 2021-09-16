@@ -1,16 +1,16 @@
 package com.bridgelabz.hotelmanagement;
 
-import java.time.*;
-
 
 public class Hotel {
 	private String name;
-	private double regularPrice;
+	private double weekendPrice;
+	private double weekdayPrice;
 	private int rating;
 	
-	public Hotel(String name, double regularPrice, int rating) {
+	public Hotel(String name, double weekdayPrice, double weekendPrice,  int rating) {
 		this.name = name;
-		this.regularPrice = regularPrice;
+		this.weekdayPrice = weekdayPrice;
+		this.setWeekendPrice(weekendPrice);
 		this.setRating(rating);
 	}
 
@@ -22,14 +22,6 @@ public class Hotel {
 		this.name = name;
 	}
 
-	public double regularPrice() {
-		return regularPrice;
-	}
-
-	public void regularPrice(double regularPrice) {
-		this.regularPrice = regularPrice;
-	}
-
 	public int getRating() {
 		return rating;
 	}
@@ -38,12 +30,29 @@ public class Hotel {
 		this.rating = rating;
 	}
 	
-	public Double getPrice(int numOfDays) {
-		return regularPrice*numOfDays;
+	public void setWeekdayPrice(double weekdayPrice) {
+		this.weekdayPrice = weekdayPrice;
+	}
+	
+	public double getWeekdayPrice() {
+		return this.weekdayPrice;
+	}
+	
+	public double getWeekendPrice() {
+		return weekendPrice;
+	}
+
+	public void setWeekendPrice(double weekendPrice) {
+		this.weekendPrice = weekendPrice;
+	}
+	
+	public Double getPrice(long numOfDays) {
+		return weekdayPrice*numOfDays;
 	}
 	
 	@Override
 	public String toString() {
-		return "name: "+this.name+" regularPrice: "+this.regularPrice+" rating: "+this.rating; 
+		return "name: "+this.name+" weekdayPrice: "+this.weekdayPrice+" weekendPrice: "+this.weekendPrice+" rating: "+this.rating; 
 	}
+
 }
