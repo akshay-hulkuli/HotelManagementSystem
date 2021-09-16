@@ -43,8 +43,9 @@ public class Hotel {
 		this.weekendPrice = weekendPrice;
 	}
 	
-	public Double getPrice(int numOfWeekdays, int numOfWeekends) {
-		return (weekdayPrice*numOfWeekdays + weekendPrice*numOfWeekends);
+	public Double getPrice(int numOfWeekdays, int numOfWeekends, CustomerType cType) {
+		if(cType == CustomerType.REGULAR) return (weekdayPrice*numOfWeekdays + weekendPrice*numOfWeekends);
+		return (rewardedWeekdayPrice*numOfWeekdays + rewardedWeekendPrice*numOfWeekends);
 	}
 	
 	@Override
