@@ -53,4 +53,27 @@ public class HotelManagementMain {
 			   .max((h1,h2) -> h1.getRating()-h2.getRating())
 			   .orElse(null);
 	}
+	
+	public Hotel getBestRatedHotel(String date1, String date2) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
+		Calendar startDate = Calendar.getInstance(), endDate = Calendar.getInstance();
+		try {
+			startDate.setTime(sdf.parse(date1));
+			endDate.setTime(sdf.parse(date2));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	
+		do {
+			if(startDate.get(Calendar.DAY_OF_WEEK) == 0 || startDate.get(Calendar.DAY_OF_WEEK) == 6) numOfWeekends++;
+			else numOfWeekdays++;
+			startDate.add(Calendar.DATE,1);
+		} while(startDate.compareTo(endDate) <=0);
+		
+		Hotel bestRatedHotel = hotelList.stream()
+							   .max((h1,h2) -> h1.getRating()-h2.getRating())
+							   .orElse(null);
+		System.out.println("the cost is : "+bestRatedHotel.getPrice(numOfWeekdays, numOfWeekends));
+		return bestRatedHotel;
+	}
 }
