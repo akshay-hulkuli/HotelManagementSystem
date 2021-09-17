@@ -13,12 +13,7 @@ public class HotelManagementSystemImpl implements HotelManagementSystemIF {
 	DateServiceProvider dateService = new DateServiceProvider();
 	
 	public void  addHotel(Hotel hotel) {
-		try {
-			hotelList.add(hotel);
-		}
-		catch (NullPointerException e) {
-			throw new HotelManagementException(HotelManagementException.exceptionType.ENTERED_NULL, "Null string is passed invalid");
-		}
+		hotelList.add(hotel);
 	}
 	
 	public List<Hotel> getCheapestHotel(String date1, String date2, CustomerType cType) throws HotelManagementException {
