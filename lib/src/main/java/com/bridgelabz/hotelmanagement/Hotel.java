@@ -1,8 +1,5 @@
 package com.bridgelabz.hotelmanagement;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Hotel {
 	private String name;
 	private double weekendPrice;
