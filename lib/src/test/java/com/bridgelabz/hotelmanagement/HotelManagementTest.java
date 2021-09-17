@@ -1,25 +1,63 @@
 package com.bridgelabz.hotelmanagement;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.*;
 
 public class HotelManagementTest {
+HotelManagementSystemImpl hotelManagement;
+	
+	@Before
+	public void initialize() {
+		hotelManagement = new HotelManagementSystemImpl();
+		Hotel firstHotel  = new Hotel();
+		firstHotel.setName("Lakewood");
+		firstHotel.setWeekdayPrice(110);
+		firstHotel.setWeekendPrice(90);
+		firstHotel.setRating(3);
+		firstHotel.setRewardedWeekdayPrice(80);
+		firstHotel.setRewardedWeekendPrice(80);
+		
+		Hotel secondHotel  = new Hotel();
+		secondHotel.setName("Bridgewood");
+		secondHotel.setWeekdayPrice(150);
+		secondHotel.setWeekendPrice(50);
+		secondHotel.setRating(4);
+		secondHotel.setRewardedWeekdayPrice(110);
+		secondHotel.setRewardedWeekendPrice(50);
+		
+		Hotel thirdHotel  = new Hotel();
+		thirdHotel.setName("Ridgewood");
+		thirdHotel.setWeekdayPrice(220);
+		thirdHotel.setWeekendPrice(150);
+		thirdHotel.setRating(5);
+		thirdHotel.setRewardedWeekdayPrice(100);
+		thirdHotel.setRewardedWeekendPrice(40);
+		
+		hotelManagement.addHotel(firstHotel);
+		hotelManagement.addHotel(secondHotel);
+		hotelManagement.addHotel(thirdHotel);
+		
+	}
+	
 	@Test
 	public void givenHotelData_ifCorrect_ShouldGetTrue() {
-		HotelManagementMain hotelManagement = new HotelManagementMain();
 		int oldSize = hotelManagement.hotelList.size();
-		hotelManagement.addHotel("Lakewood",100.0,110.0,3,80.0,80.0);
+		Hotel newHotel  = new Hotel();
+		newHotel.setName("NewWood");
+		newHotel.setWeekdayPrice(110);
+		newHotel.setWeekendPrice(90);
+		newHotel.setRating(3);
+		newHotel.setRewardedWeekdayPrice(80);
+		newHotel.setRewardedWeekendPrice(80);
+		hotelManagement.addHotel(newHotel);
 		Assert.assertSame(oldSize+1,hotelManagement.hotelList.size());
 	}
 	
 	@Test
 	public void givenDateRange_find_CheapestHotel() {
-		HotelManagementMain hotelManagement = new HotelManagementMain();
-		hotelManagement.addHotel("Lakewood",110,90,3,80,80);
-		hotelManagement.addHotel("Bridgewood",150,50,4,110,50);
-		hotelManagement.addHotel("Ridgewood",220,150,5,100,40);
 		
 		List<Hotel> hotels = hotelManagement.getCheapestHotel("11Sep2020","12Sep2020");
 		
@@ -32,10 +70,6 @@ public class HotelManagementTest {
 	
 	@Test
 	public void givenDateRange_find_CheapestAndBestRatedHotel() {
-		HotelManagementMain hotelManagement = new HotelManagementMain();
-		hotelManagement.addHotel("Lakewood",110,90,3,80,80);
-		hotelManagement.addHotel("Bridgewood",150,50,4,110,50);
-		hotelManagement.addHotel("Ridgewood",220,150,5,100,40);
 		
 		Hotel hotel = hotelManagement.getCheapestAndBestRatedHotel("11Sep2020","12Sep2020");
 		System.out.println("the cheapest and best rated hotel is : ");
@@ -46,10 +80,6 @@ public class HotelManagementTest {
 	
 	@Test
 	public void givenDateRange_find_BestRatedHotel() {
-		HotelManagementMain hotelManagement = new HotelManagementMain();
-		hotelManagement.addHotel("Lakewood",110,90,3,80,80);
-		hotelManagement.addHotel("Bridgewood",150,50,4,110,50);
-		hotelManagement.addHotel("Ridgewood",220,150,5,100,40);
 		
 		Hotel hotel = hotelManagement.getBestRatedHotel("11Sep2020","12Sep2020");
 		System.out.println("the best rated hotel is : ");
