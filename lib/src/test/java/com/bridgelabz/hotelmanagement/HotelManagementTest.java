@@ -1,29 +1,62 @@
 package com.bridgelabz.hotelmanagement;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class HotelManagementTest {
+
+	HotelManagementSystemImpl hotelManagement;
+	
+	@Before
+	public void initialize() {
+		hotelManagement = new HotelManagementSystemImpl();
+		Hotel firstHotel  = new Hotel();
+		firstHotel.setName("Lakewood");
+		firstHotel.setWeekdayPrice(110);
+		firstHotel.setWeekendPrice(90);
+		firstHotel.setRating(3);
+		
+		Hotel secondHotel  = new Hotel();
+		secondHotel.setName("Bridgewood");
+		secondHotel.setWeekdayPrice(150);
+		secondHotel.setWeekendPrice(50);
+		secondHotel.setRating(4);
+		
+		Hotel thirdHotel  = new Hotel();
+		thirdHotel.setName("Ridgewood");
+		thirdHotel.setWeekdayPrice(220);
+		thirdHotel.setWeekendPrice(150);
+		thirdHotel.setRating(5);
+		
+		hotelManagement.addHotel(firstHotel);
+		hotelManagement.addHotel(secondHotel);
+		hotelManagement.addHotel(thirdHotel);
+		
+	}
+	
 	@Test
 	public void givenHotelData_ifCorrect_ShouldGetTrue() {
-		HotelManagementMain hotelManagement = new HotelManagementMain();
+	
 		int oldSize = hotelManagement.hotelList.size();
-		hotelManagement.addHotel("Lakewood",100.0,110.0,4);
+		Hotel newHotel  = new Hotel();
+		newHotel.setName("NewWood");
+		newHotel.setWeekdayPrice(220);
+		newHotel.setWeekendPrice(150);
+		newHotel.setRating(5);
+		
+		hotelManagement.addHotel(newHotel);
 		Assert.assertSame(oldSize+1,hotelManagement.hotelList.size());
 	}
 	
 	@Test
 	public void givenDate_find_CheapestHotel() {
-		HotelManagementMain hotelManagement = new HotelManagementMain();
-		hotelManagement.addHotel("Lakewood",110.0,90.0,3);
-		hotelManagement.addHotel("Bridgewood",150.0,50.0,4);
-		hotelManagement.addHotel("Ridgewood",220.0,150.0,5);
 		
-		List<Hotel> hotels = hotelManagement.getCheapestHotel("11-9-2020","12-9-2020");
+		List<Hotel> hotels = hotelManagement.getCheapestHotel("11Sep2020","12Sep2020");
 		System.out.println("the cheapest hotel is/are : ");
 		System.out.println(hotels);
+		Assert.assertEquals("Lakewood", hotels.get(0).getName());
+		Assert.assertEquals("Bridgewood", hotels.get(1).getName());
 	}
 }
