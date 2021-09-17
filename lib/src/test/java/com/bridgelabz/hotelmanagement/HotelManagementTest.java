@@ -5,9 +5,10 @@ import org.junit.Test;
 import java.time.LocalDate;
 
 public class HotelManagementTest {
+	
 	@Test
 	public void givenHotelData_ifCorrect_ShouldGetTrue() {
-		HotelManagementMain hotelManagement = new HotelManagementMain();
+		HotelManagementSystemImpl hotelManagement = new HotelManagementSystemImpl();
 		int oldSize = hotelManagement.hotelList.size();
 		hotelManagement.addHotel("Lakewood",100.0,4);
 		Assert.assertSame(oldSize+1,hotelManagement.hotelList.size());
@@ -15,7 +16,7 @@ public class HotelManagementTest {
 	
 	@Test
 	public void givenDate_find_CheapestHotel() {
-		HotelManagementMain hotelManagement = new HotelManagementMain();
+		HotelManagementSystemImpl hotelManagement = new HotelManagementSystemImpl();
 		hotelManagement.addHotel("Lakewood",100.0,4);
 		hotelManagement.addHotel("Bridgewood",110.0,4);
 		hotelManagement.addHotel("Ridgewood",105.0,4);
