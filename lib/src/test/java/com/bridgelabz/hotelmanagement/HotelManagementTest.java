@@ -44,7 +44,7 @@ public class HotelManagementTest {
 	}
 	
 	@Test
-	public void givenHotelData_ifCorrect_ShouldGetTrue() {
+	public void givenHotelData_ifAdded_ShouldGetTrue() {
 		int oldSize = hotelManagement.hotelList.size();
 		Hotel newHotel  = new Hotel();
 		newHotel.setName("NewWood");
@@ -59,7 +59,6 @@ public class HotelManagementTest {
 	
 	@Test
 	public void givenDateRange_find_CheapestHotel() {
-		
 		
 		List<Hotel> hotels = hotelManagement.getCheapestHotel("11Sep2020","12Sep2020",CustomerType.REGULAR);
 		
@@ -100,6 +99,27 @@ public class HotelManagementTest {
 	}
 	
 	@Test
+	public void givenDateRangeAndRewardedCustomer_find_CheapestAndBestRatedHotel() {
+		
+		Hotel hotel = hotelManagement.getCheapestAndBestRatedHotel("11Sep2020","12Sep2020",CustomerType.REWARDED);
+		System.out.println("the cheapest and best rated hotel is : ");
+		System.out.println(hotel);
+		System.out.println();
+		Assert.assertEquals("Ridgewood", hotel.getName());
+	}
+	
+	@Test
+	public void givenDateRangeAndRewardedCustomer_find_CheapestHotel() {
+		
+		List<Hotel> hotels = hotelManagement.getCheapestHotel("11Sep2020","12Sep2020",CustomerType.REWARDED);
+		System.out.println("the cheapest hotel is : ");
+		System.out.println(hotels);
+		System.out.println();
+		Assert.assertEquals("Ridgewood", hotels.get(0).getName());
+	}
+
+	
+	@Test
 	public void givenDateRange_IfNull_ShouldThrowException() {
 		ExpectedException exceptionRule = ExpectedException.none();
 		exceptionRule.expect(HotelManagementException.class);
@@ -126,6 +146,7 @@ public class HotelManagementTest {
 		}
 	}
 	
+	
 	@Test
 	public void givenDateRangeAndCustomerType_IfEmpty_ShouldThrowException() {
 		ExpectedException exceptionRule = ExpectedException.none();
@@ -140,12 +161,17 @@ public class HotelManagementTest {
 	}
 	
 	@Test
-	public void givenDateRange_find_CheapestAndBestRatedHotel_forRewardedCustomer() {
-		
-		Hotel hotel = hotelManagement.getCheapestAndBestRatedHotel("11Sep2020","12Sep2020",CustomerType.REWARDED);
-		System.out.println("the cheapest and best rated hotel is : ");
-		System.out.println(hotel);
-		System.out.println();
-		Assert.assertEquals("Ridgewood", hotel.getName());
+	public void givenDateRangeAndCustomerType_IfNull_ShouldThrowException() {
+		ExpectedException exceptionRule = ExpectedException.none();
+		exceptionRule.expect(HotelManagementException.class);
+		try {
+			Hotel hotel = hotelManagement.getCheapestAndBestRatedHotel(null,"12Sep2020",CustomerType.REWARDED);
+		}
+		catch(HotelManagementException e) {
+			System.out.println(e.getMessage());
+			System.out.println();
+		}
 	}
+	
+	
 }
