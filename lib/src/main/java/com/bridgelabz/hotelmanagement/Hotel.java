@@ -6,13 +6,6 @@ public class Hotel {
 	private double weekendPrice;
 	private double weekdayPrice;
 	private int rating;
-	
-	public Hotel(String name, double weekdayPrice, double weekendPrice,  int rating) {
-		this.name = name;
-		this.weekdayPrice = weekdayPrice;
-		this.setWeekendPrice(weekendPrice);
-		this.setRating(rating);
-	}
 
 	public String getName() {
 		return name;
